@@ -31,6 +31,24 @@ def IDFT(x):
 
     return res
   
+def FFT(x):
+    N = len(x)
+    if N <= 1:
+        return x
+    even = FFT(x[::2])
+    odd = FFT(x[1::2])
+    factor = np.exp(-2j * np.pi * np.arange(N) / N)
+    return np.concatenate([even + factor[:N // 2] * odd, even + factor[N // 2:] * odd])
+
+def IFFT(x):
+    N = len(x)
+    if N <= 1:
+        return x
+    even = ifft(x[::2])
+    odd = ifft(x[1::2])
+    factor = np.exp(2j * np.pi * np.arange(N) / N)
+    return np.concatenate([even + factor[:N // 2] * odd, even + factor[N // 2:] * odd]) / 2
+
 # sample  
 minval = 0.0
 maxval = 1.0
