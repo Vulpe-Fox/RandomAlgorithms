@@ -2,8 +2,8 @@ import java.util.*;
 
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        HashSet<Integer> set = new HashSet();
-        HashMap<Integer, Integer> map = new HashMap();
+        HashSet<Integer> set = new HashSet<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
         
         int[] result = new int[2];
         
