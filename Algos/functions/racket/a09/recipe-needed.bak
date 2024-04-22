@@ -1,0 +1,49 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname recipe-needed) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #t)))
+(define (m1 a)
+  (local
+    [(define b (string->list a))]
+    (foldr
+     (lambda (x y z)
+       (and (char=? x y) z))
+     true
+     b
+     (foldl cons empty b))))
+
+
+(define (m2 a)
+  (lambda (s)
+    (local
+      [(define (r x) (quicksort (string->list x) char<?))
+       (define u (map (lambda (x) (list x (r x))) a))
+       (define (t x) (foldr (lambda (y z) (add1 z)) 0 x))]
+      (foldr
+       (lambda (x y)
+         (cond
+           [(string=? s (first x)) y]
+           [(not (= (t (r s)) (t (second x)))) y]
+           [else
+            (or y (foldr
+                   (lambda (x y)
+                     (cond
+                       [(and x y) y]
+                       [else false]))
+                   true
+                   (map (lambda (a b) (char=? a b)) (r s) (second x))))]))
+       false
+       u))))
+
+
+(define (m3 a b)
+   (local
+     [(define c (filter integer? b))
+      (define (d e f)
+        (foldl (lambda (x y)
+                 (cond
+                   [(f x y) x]
+                   [else y]))
+               (first e)
+               e))]
+     (a (- (d c >) (d c <)))))
+
