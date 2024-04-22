@@ -1,0 +1,91 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname mt2-shortans) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;; ***********************************
+;;   YOUR NAME (your Student #)
+;;   CS 135 Fall 2020
+;;   MT2 Short Answer
+;; ***********************************
+
+;; =================
+;; DO NOT EDIT ANYTHING IN THIS SECTION
+;; (they are needed so you can "Run" this file.
+(define-struct ls (first rest))
+;; =================
+
+
+;; -------------------------
+;; Jumble List questions
+
+;; Complete with the length of the list
+(define jumble-length 'NO-ANSWER)
+
+;; Complete with the list in list format
+(define jumble-list-format 'NO-ANSWER)
+
+;; Complete with the list in quote format
+(define jumble-quote-format 'NO-ANSWER)
+
+;; Complete with the list in cons format
+(define jumble-cons-format 'NO-ANSWER)
+
+
+
+;; -------------------------
+;; Clothes list questions
+
+;; Complete with the length of the list
+(define clothes-length 'NO-ANSWER)
+
+;; Complete with the list in list format
+(define clothes-list-format 'NO-ANSWER)
+
+;; Complete with the list in quoted list format
+(define clothes-quote-format 'NO-ANSWER)
+
+;; Complete the function body. You may only use
+;;   parentheses, cons, first, rest, and the parameter c.
+(define (clothes-rearrange c)
+  'NO-ANSWER)
+
+
+;; -------------------------
+;; SpreadyInt Questions
+
+;; Complete with the template definition
+(define (spreadyint-template n)
+  'NO-ANSWER)
+
+;; Choose all that apply from
+;; 'A 'B 'C 'D 'E 'F 'G 'H
+(define spreadyint-members (list 'NO-ANSWER))
+
+
+
+;; -------------------------
+;; Inspection (decreasing?) Questions
+
+;; CAREFUL! Each one of these answers uses the same options.
+;; Make sure you are filling in the proper questions!
+
+;; Implementation 1: Choose one from 'A 'B 'C 'D 'E 'F
+(define decreasing-result-v1 'NO-ANSWER)
+
+;; Implementation 2: Choose one from 'A 'B 'C 'D 'E 'F
+(define decreasing-result-v2 'NO-ANSWER)
+
+;; Implementation 3: Choose one from 'A 'B 'C 'D 'E 'F
+(define decreasing-result-v3 'NO-ANSWER)
+
+
+
+;; -------------------------
+;; Thing questions
+
+;; Most SPECIFIC definition. Choose one from
+;; 'I 'J 'K 'L 'M 'N 'O
+(define thing-specific 'NO-ANSWER)
+
+;; INVALID definitions. Choose all that apply from
+;; 'P 'Q 'R 'S 'T 'U 'V
+(define thing-invalid-defs (list 'NO-ANSWER))
