@@ -44,6 +44,9 @@
         "xstddef": "cpp",
         "xtr1common": "cpp",
         "xutility": "cpp",
-        "algorithm": "cpp"
-    }
+        "algorithm": "cpp",
+        "ranges": "cpp",
+        "span": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
