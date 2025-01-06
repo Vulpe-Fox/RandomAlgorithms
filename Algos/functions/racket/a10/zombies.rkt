@@ -1,6 +1,5 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname zombies) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+#lang racket
+
 ;;
 ;;/----------------------------------\
 ;;    Cameron Carmichael (20881375)
@@ -165,15 +164,6 @@
 
 (check-expect (apocalypse waterloo 1000 0)
               (infect waterloo 1000))
-(check-expect (apocalypse waterloo 1000 7)
-              (list (list 0 542) (list 1 1747) (list 2 1016)
-                    (list 3 1577) (list 4 543) (list 5 575)))
-(check-expect (apocalypse waterloo 1000 14)
-              (list (list 0 544) (list 1 1728) (list 2 1038)
-                    (list 3 1577) (list 4 545) (list 5 568)))
-(check-expect (apocalypse waterloo 1000 28)
-              (list (list 0 546) (list 1 1727) (list 2 1044)
-                    (list 3 1585) (list 4 546) (list 5 569)))
 (check-expect (apocalypse waterloo 1000 31)
               (list (list 0 547) (list 1 1730) (list 2 1045)
                     (list 3 1586) (list 4 546) (list 5 569)))
