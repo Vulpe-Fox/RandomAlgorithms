@@ -22,7 +22,7 @@ def git_commit():
 
     # Create commit with current date
     date = datetime.now().strftime('%Y-%m-%d')
-    commit_message = f"Update number: {date}"
+    commit_message = f"Continuous stream of small updates on: {date}"
     subprocess.run(['git', 'commit', '-m', commit_message])
 
 def git_push():
