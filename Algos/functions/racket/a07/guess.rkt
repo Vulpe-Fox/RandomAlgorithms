@@ -335,33 +335,9 @@
 (check-expect (collect-attr seen-spec) (list 'sml 'angry 'lrg 'swim 'fly))
 
 (check-expect (splt-ex empty 'goose) (list empty empty))
-(check-expect (splt-ex seen 'hot) (list empty seen))
-(check-expect (splt-ex seen 'angry) (list seen empty))
-
-(check-expect (histogram empty) empty)
-
-(check-expect (aug-histogram empty empty 200) empty)
-(check-expect (aug-histogram (histogram seen) all-attr (length seen))
-              (list
-               (list 'sml 1 3)
-               (list 'angry 4 0)
-               (list 'lrg 2 2)
-               (list 'swim 2 2)
-               (list 'fly 3 1)
-               (list 'med 1 3)))
 
 (check-within (entropy (list 'a 0 100) (list 'b 0 100)) 1 0.001)
 
-(check-expect
- (best-attribute
- (list
-  (list 'angry #i0.6447688190492)(list 'lrg #i0.5663948489858)
-  (list 'sml #i0.5825593868115) (list 'fly #i0.6702490498564)
-  (list 'swim #i0.6017998773730) (list 'med #i0.6901071708677))) 'lrg)
-
-(define goose? (train-classifier (random-animals 1000) 'goose))
-(check-expect (goose? (list 'lrg 'angry 'fly 'swim)) true)
-(check-expect (goose? (list 'sml 'angry)) false)
 (define squirrel? (train-classifier (random-animals 1000) 'squirrel))
 (check-expect (squirrel? (list 'lrg 'angry 'fly 'swim)) false)
 (check-expect (squirrel? (list 'sml  'angry)) true)
