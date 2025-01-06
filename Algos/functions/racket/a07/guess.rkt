@@ -262,17 +262,17 @@
         (local[(define root-attr (best-attribute (entropy-attr
                                                        aug-pos
                                                        aug-neg)))]
-          (local[(define split-root (splt-ex ex root-attr))]
-            (local[(define (rm-roots ex root)
+          (local[(define split-rt (splt-ex ex root-attr))]
+            (local[(define (rm-rts ex root)
                      (cond[(empty? ex) empty]
-                          [else (cons (remove-root (first ex) root)
-                                      (rm-roots (rest ex) root))]))
-                   (define (remove-root example root)
+                          [else (cons (rm-rt (first ex) root)
+                                      (rm-rts (rest ex) root))]))
+                   (define (rm-rt example root)
                      (cond[(empty? example) empty]
-                          [(symbol=? (first example) root) (remove-root (rest example) root)]
-                          [else (cons (first example) (remove-root (rest example) root))]))]
-              (local[(define ctns-root (rm-roots (first split-root) root-attr))
-                     (define no-root (second split-root))]
+                          [(symbol=? (first example) root) (rm-rt (rest example) root)]
+                          [else (cons (first example) (rm-rt (rest example) root))]))]
+              (local[(define ctns-root (rm-rts (first split-rt) root-attr))
+                     (define no-root (second split-rt))]
                   (cond[(empty? positive) false]
                        [(empty? negative) true]
                        [(and (empty? attr) (> (length positive) (length negative))) true]
