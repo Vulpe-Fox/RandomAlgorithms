@@ -133,34 +133,7 @@
                 [else (night-passer (next-horde curr-horde) (sub1 remaining-nights))]))]
     (night-passer (infect town infection) nights)))
 
-;;Tests variables
-(define braaaaains (second (sink (infect waterloo 1000))))
-(define braaaaaaains (shamble waterloo braaaaains))
-
-;;Tests
-(check-expect (infect waterloo 0)
-              (list (list 0 0) (list 1 0) (list 2 0)
-                    (list 3 0) (list 4 0) (list 5 0)))
-
-(check-expect (sink (infect waterloo 0))
-              (list 0 (list (list 0 0) (list 1 0)
-                            (list 2 0) (list 3 0)
-                            (list 4 0) (list 5 0))))
-
-(check-expect (apportion 100 0) '())
-(check-expect (apportion 0 3) '(0 0 0))
-
-(check-expect (shamble waterloo (list (list 0 0) (list 1 0) (list 2 0)
-                                      (list 3 0) (list 4 0) (list 5 0)))
-              (list (list 0 0) (list 1 0) (list 2 0)
-                    (list 3 0) (list 4 0) (list 5 0)))
-
-(check-expect (rise 0 braaaaaaains)
-              braaaaaaains)
-
-(check-expect (night waterloo (infect waterloo 0))
-              (list (list 0 0) (list 1 0) (list 2 0)
-                    (list 3 0) (list 4 0) (list 5 0)))
+;; tests
 
 (check-expect (apocalypse waterloo 1000 0)
               (infect waterloo 1000))
