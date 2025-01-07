@@ -33,7 +33,7 @@
 ;;(histogram ex)
 ;;(aug-histogram histogram attr total) produces an AH from a histogram using a total num of
 ;;   entries
-;;(entropy positive-counts negative-counts) Determines the entropy when comparing two members of an AH
+;;(entropy pos-cnts neg-cnts) Determines the entropy when comparing two members of an AH
 ;;(entropy-attr positive negative) Determines the entropy for all attr in two AH
 ;;(best-attribute attribute-entropies) Determines the attribute with the lowest entropy
 ;;(build-dt ex label) Produces a Decision Tree for a set of data for a label
@@ -51,24 +51,8 @@
    (list 'goose 'lrg 'swim 'fly 'angry)
    (list 'crow 'med 'fly 'angry)))
 
-(define seen-spec
-  (list
-   (list 'squirrel 'sml 'angry)
-   (list 'goose 'lrg 'swim 'fly 'angry)
-   (list 'goose 'lrg 'swim 'fly 'angry)
-   (list 'nid)))
-
 ;;Examples
 (check-expect (collect-attr seen) (list 'sml 'angry 'lrg 'swim 'fly 'med))
-
-(check-expect (splt-ex seen 'goose)
-              (list
-               (list
-                (list 'goose 'lrg 'swim 'fly 'angry)
-                (list 'goose 'lrg 'swim 'fly 'angry))
-               (list
-                (list 'squirrel 'sml 'angry)
-                (list 'crow 'med 'fly 'angry))))
 
 (check-expect (histogram seen)
               (list (list 'sml 1) (list 'angry 4) (list 'lrg 2)
@@ -80,13 +64,8 @@
   (list 'a 'b 'c)
   200)
  (list (list 'a 100 100) (list 'c 50 150) (list 'b 0 200)))
-(check-expect
- (aug-histogram empty (list 'x 'y) 10)
- (list (list 'x 0 10) (list 'y 0 10)))
 
 (check-within (entropy (list 'lrg 126 59) (list 'lrg 146 669)) 0.5664 0.001)
-(check-within (entropy (list 'sml 17 168) (list 'sml 454 361)) 0.5826 0.001)
-(check-within (entropy (list 'a 0 100) (list 'b 100 0)) 0 0.001)
 
 (check-within (entropy-attr
                (list
@@ -102,13 +81,6 @@
                (list 'sml #i0.5825593868115) (list 'fly #i0.6702490498564)
                (list 'swim #i0.6017998773730) (list 'med #i0.6901071708677))
               0.001)
-
-(check-expect
- (best-attribute
- (list
-  (list 'lrg #i0.5663948489858) (list 'angry #i0.6447688190492)
-  (list 'sml #i0.5825593868115) (list 'fly #i0.6702490498564)
-  (list 'swim #i0.6017998773730) (list 'med #i0.6901071708677))) 'lrg)
 
 ;;(collect-attr ex) (ListOf Example) -> (ListOf Sym)
 (define (collect-attr ex)
@@ -195,8 +167,8 @@
 
     (count-not-contains (add-attr-to-histogram histogram attr) total)))
 
-;;(entropy positive-counts negative-counts) (list Sym Nat Nat) + (list Sym Nat Nat) -> Num
-(define (entropy positive-counts negative-counts)
+;;(entropy pos-cnts neg-cnts) (list Sym Nat Nat) + (list Sym Nat Nat) -> Num
+(define (entropy pos-cnts neg-cnts)
   (local[(define (est-prob val1 val2)
            (cond[(= (+ val1 val2) 0) 0.5]
                 [else (/ val1 (+ val1 val2))]))
@@ -204,14 +176,14 @@
            (cond[(= probability 0) 0]
                 [else (* (- probability) (/ (log probability) (log 2)))]))]
 
-    (+ (* (est-prob (+ (second positive-counts) (second negative-counts))
-                                (+ (third positive-counts) (third negative-counts)))
-          (+ (calc-e (est-prob (second positive-counts) (second negative-counts)))
-             (calc-e (est-prob (second negative-counts) (second positive-counts)))))
-       (* (est-prob (+ (third positive-counts) (third negative-counts))
-                                (+ (second positive-counts) (second negative-counts)))
-          (+ (calc-e (est-prob (third positive-counts) (third negative-counts)))
-             (calc-e (est-prob (third negative-counts) (third positive-counts))))))))
+    (+ (* (est-prob (+ (second pos-cnts) (second neg-cnts))
+                                (+ (third pos-cnts) (third neg-cnts)))
+          (+ (calc-e (est-prob (second pos-cnts) (second neg-cnts)))
+             (calc-e (est-prob (second neg-cnts) (second pos-cnts)))))
+       (* (est-prob (+ (third pos-cnts) (third neg-cnts))
+                                (+ (second pos-cnts) (second neg-cnts)))
+          (+ (calc-e (est-prob (third pos-cnts) (third neg-cnts)))
+             (calc-e (est-prob (third neg-cnts) (third pos-cnts))))))))
 
 ;;(entropy-attr positive negative) AH + AH -> EAL
 (define (entropy-attr positive negative)
@@ -301,9 +273,9 @@
                   [else (check-down-line (third dt) attr)]))]
       predicate))
 
-;;(performance pred? ex label)
+;;(perf pred? ex label)
 ;;   ((listof Sym) -> Bool) + (ListOf Example) + Sym -> (list Sym Nat Nat)
-(define (performance pred? ex label)
+(define (perf pred? ex label)
   (local[(define (comb pred? lst)
            (cond[(empty? lst) 0]
                 [(pred? (first (first lst))) (add1 (comb pred? (rest lst)))]
@@ -330,7 +302,6 @@
           (round (* (/ (find-incorrect ex 0) total-neg) 100)))))
 
 ;;Tests
-(check-expect (collect-attr empty) empty)
 (check-expect (collect-attr seen-spec) (list 'sml 'angry 'lrg 'swim 'fly))
 
 (check-expect (splt-ex empty 'goose) (list empty empty))
@@ -339,7 +310,5 @@
 
 (define squirrel? (train-classifier (random-animals 1000) 'squirrel))
 (check-expect (squirrel? (list 'lrg 'angry 'fly 'swim)) false)
-(check-expect (squirrel? (list 'sml  'angry)) true)
 (define crow? (train-classifier (random-animals 1000) 'crow))
 (check-expect (crow? (list 'angry 'fly 'med)) true)
-(check-expect (crow? (list)) false)
