@@ -31,6 +31,7 @@ def find_dist(langs):
     total = 0
     for lang in langs:
         total += int(langs[lang])
+    lang["Net Code Frequency"] = total
     for lang in langs:
         langs[lang] = "{percent}%".format(percent = langs[lang]/total*100)
     return langs
