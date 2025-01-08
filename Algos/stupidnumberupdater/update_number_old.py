@@ -1,3 +1,4 @@
+import sys
 import os
 import subprocess
 from datetime import datetime
@@ -16,14 +17,13 @@ def write_number(num):
         f.write(str(num))
 
 
-def git_commit():
+def git_commit(date):
     # Stage the changes
     subprocess.run(['git', 'add', 'number.txt'])
 
     # Create commit with current date
-    date = datetime.now().strftime('%Y-%m-%d')
     commit_message = f"Continuous stream of small updates on: {date}"
-    subprocess.run(['git', 'commit', '-m', commit_message])
+    subprocess.run(['git', 'commit', '--date='+date, '-m', commit_message])
 
 def git_push():
     # Push the committed changes to GitHub
@@ -37,11 +37,12 @@ def git_push():
 
 def main():
     try:
+        date = sys.argv[1]
         current_number = read_number()
         new_number = current_number + 1
         write_number(new_number)
 
-        git_commit()
+        git_commit(date)
         git_push()
 
     except Exception as e:
